@@ -18,7 +18,12 @@ process.stdin.on("data", function (data) {
       case "1":
         console.log("Qual o nome do paciênte? ")
         break;
-    
+      case "2":
+        consultas.forEach(function(obj, indice) {
+          console.log(indice, obj)
+        })
+        opcao = undefined
+        break;
       default:
         console.log("Opção inválida");
         opcao = undefined
@@ -43,9 +48,6 @@ process.stdin.on("data", function (data) {
           consulta = {}
           opcao = undefined
         }
-        break;
-      case "2":
-        console.log("Listando consultas");
         break;
       case "3":
         console.log("Desmarcando consulta");
