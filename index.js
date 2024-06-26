@@ -2,6 +2,9 @@ let opcao;
 let consultas = [];
 let consulta = {};
 
+let indiceAtualizar
+let atributoAtualizar
+
 console.log("O que deseja?");
 console.log("1. Inserir consulta");
 console.log("2. Listar consultas");
@@ -18,13 +21,13 @@ process.stdin.on("data", function (data) {
       case "1":
         console.log("Qual o nome do paciênte? ")
         break;
-      case "3":
-        console.log("Qual consulta deseja remover? Digite o indice")
+      case "3", "4":
+        console.log("Qual consulta deseja? Digite o indice")
       case "2":
         consultas.forEach(function(obj, indice) {
           console.log(indice, obj)
         })
-        if(opcao != "3")
+        if(opcao == "2")
           opcao = undefined
         break;
       default:
@@ -54,13 +57,29 @@ process.stdin.on("data", function (data) {
         }
         break;
       case "3":
-        indiceRemocao = entrada
+        let indiceRemocao = entrada
         consultas[indiceRemocao].removido = true
         console.log("Consulta removida com sucesso")
         opcao = undefined
       break;
       case "4":
-        console.log("Atualizando consulta");
+        if(!indiceAtualizar) {
+          indiceAtualizar = entrada
+          console.log("Qual atributo você deseja mudar? Digite o nome")
+          let atributos = Object.keys(consultas[indiceAtualizar])
+          for (let i = 0; i < atributos.length; i++) {
+            console.log(atributos[i])
+          }
+        } else if(!atributoAtualizar) {
+          atributoAtualizar = entrada
+          console.log("Qual é o novo valor?")
+        } else {
+          consultas[indiceAtualizar][atributoAtualizar] = entrada
+          console.log("Dado atualizado com sucesso")
+          indiceAtualizar = undefined
+          atributoAtualizar = undefined
+          opcao = undefined
+        }
         break;
     }
   }
