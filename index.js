@@ -1,4 +1,6 @@
 let opcao;
+let consultas = [];
+let consulta = {};
 
 console.log("O que deseja?");
 console.log("1. Inserir consulta");
@@ -11,10 +13,36 @@ process.stdin.on("data", function (data) {
 
   if (!opcao) {
     opcao = entrada;
+
+    switch (opcao) {
+      case "1":
+        console.log("Qual o nome do paciênte? ")
+        break;
+    
+      default:
+        console.log("Opção inválida");
+        opcao = undefined
+        break;
+    }
   } else {
     switch (opcao) {
       case "1":
-        console.log("Inserindo consulta");
+        if(!consulta.paciente) {
+          consulta.paciente = entrada;
+          console.log("Médico: ");
+        } else if(!consulta.medico) {
+          consulta.medico = entrada
+          console.log("Data: ");
+        } else if(!consulta.data) {
+          consulta.data = entrada
+          console.log("Horário: ");
+        } else {
+          consulta.horario = entrada
+          consultas.push(consulta)
+          console.log(`Consulta agendada com sucesso`)
+          consulta = {}
+          opcao = undefined
+        }
         break;
       case "2":
         console.log("Listando consultas");
@@ -26,7 +54,5 @@ process.stdin.on("data", function (data) {
         console.log("Atualizando consulta");
         break;
     }
-    opcao = undefined
-    console.log("Digite outra opção")
   }
 });
